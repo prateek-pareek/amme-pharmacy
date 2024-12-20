@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import syringeIcon from "../assets/Syringe.png"; // Replace with the actual path if needed
+import Calendar from "./UI/Calendar";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import QuestionIcon from "../assets/icons/question.svg";
 import SearchIcon from "../assets/icons/search.svg";
 import UserIcon from "../assets/icons/user.svg";
+import MailIcon from "../assets/icons/mail.svg";
+import PhoneIcon from "../assets/icons/phone.svg";
+import FlagIcon from "../assets/icons/flag.svg";
 import OrderCard from "./OrderCard";
-import Calendar from "../components/UI/Calendar";
-// import { format } from "date-fns";
-import { fr } from "date-fns/locale"; // Import French locale
-import { format } from "date-fns";
 
-const Page6 = () => {
+function Page29() {
   const [date, setDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTab, setSelectedTab] = useState("Récupérées");
   const formattedDate = format(date, "PPP", { locale: fr });
-  const [selectedTab, setSelectedTab] = useState("En attente"); // Track selected tab
 
-  const toggleCalendar = () => {
-    setIsOpen(!isOpen);
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
   };
 
-  // Sample dummy data for cards
   const orders = [
     {
       id: 1,
@@ -33,108 +33,10 @@ const Page6 = () => {
         "3 SOLUPRED 5 mg",
       ],
       deliveryDate: "2023-10-26",
-      paymentStatus: "Non payé",
+      paymentStatus: "payé",
       orderNumber: "73",
       socialSecurityNumber: "1 85 05 78 006 084 36",
       nurseName: "Basilisse Lopez",
-    },
-    {
-      id: 2,
-      patientName: "Cléandre Roche",
-      medications: [
-        "1 Amoxicilline 500mg",
-        "3 SOLUPRED 5mg",
-        "6 Loratadine 10mg",
-        "1 LOVENOX 4000",
-        "1 MEDISET",
-        "2 Doliprane 1000mg",
-        "3 SOLUPRED 5 mg",
-      ],
-      deliveryDate: "2023-10-27",
-      paymentStatus: "payé",
-      orderNumber: "72",
-      socialSecurityNumber: "2 93 06 45 009 087 12",
-      nurseName: "Vincent Riviere",
-    },
-    {
-      id: 3,
-      patientName: "Éliane Dubois",
-      medications: [
-        "2 Ibuprofen 400mg",
-        "1 Omeprazole 20mg",
-        "4 Paracetamol 500mg",
-      ],
-      deliveryDate: "2023-10-28",
-      paymentStatus: "Non payé",
-      orderNumber: "74",
-      socialSecurityNumber: "1 84 04 38 002 056 34",
-      nurseName: "Marie Bernard",
-    },
-    {
-      id: 4,
-      patientName: "René Lefèvre",
-      medications: ["1 Cetirizine 10mg", "3 Aspirin 81mg", "2 Metformin 500mg"],
-      deliveryDate: "2023-10-29",
-      paymentStatus: "payé",
-      orderNumber: "75",
-      socialSecurityNumber: "1 94 05 65 004 093 22",
-      nurseName: "Louis Dupont",
-    },
-    {
-      id: 5,
-      patientName: "Juliette Garnier",
-      medications: [
-        "1 Losartan 50mg",
-        "2 Furosemide 40mg",
-        "1 Amlodipine 10mg",
-      ],
-      deliveryDate: "2023-10-30",
-      paymentStatus: "Non payé",
-      orderNumber: "76",
-      socialSecurityNumber: "2 75 03 12 007 032 18",
-      nurseName: "Emilie Moreau",
-    },
-    {
-      id: 6,
-      patientName: "Théo Laurent",
-      medications: [
-        "2 Simvastatin 20mg",
-        "1 Aspirin 81mg",
-        "3 Albuterol 90mcg",
-      ],
-      deliveryDate: "2023-10-31",
-      paymentStatus: "payé",
-      orderNumber: "77",
-      socialSecurityNumber: "1 92 08 44 003 071 45",
-      nurseName: "Pierre Martin",
-    },
-    {
-      id: 7,
-      patientName: "Camille Morel",
-      medications: [
-        "1 Omeprazole 40mg",
-        "2 Cetirizine 10mg",
-        "4 Ibuprofen 200mg",
-      ],
-      deliveryDate: "2023-11-01",
-      paymentStatus: "Non payé",
-      orderNumber: "78",
-      socialSecurityNumber: "2 83 02 24 008 064 27",
-      nurseName: "Lucie Perrin",
-    },
-    {
-      id: 8,
-      patientName: "Mathis Simon",
-      medications: [
-        "1 Metformin 850mg",
-        "3 Simvastatin 40mg",
-        "2 Paracetamol 1000mg",
-      ],
-      deliveryDate: "2023-11-02",
-      paymentStatus: "payé",
-      orderNumber: "79",
-      socialSecurityNumber: "1 97 06 49 001 091 56",
-      nurseName: "Sophie Girard",
     },
   ];
 
@@ -183,23 +85,22 @@ const Page6 = () => {
             </svg>
           </div>
 
-          {isOpen && (
-            <div className="absolute top-full mt-2 z-10 bg-white border rounded-md shadow-lg">
-              <Calendar
+          {/* {isOpen && (
+        <div className="absolute top-full mt-2 z-10 bg-white border rounded-md shadow-lg">
+          <Calendar
                 selected={date}
                 onSelect={(selectedDate) => {
                   setDate(selectedDate);
                   setIsOpen(false);
                 }}
               />
-            </div>
-          )}
+        </div>
+      )} */}
         </div>
 
         {/* Tabs */}
         <div className="flex-1 flex justify-center">
           <button
-            onClick={() => setSelectedTab("En attente")}
             className={`text-[#0C66E6] font-medium rounded-md ${
               selectedTab === "En attente" ? "bg-white" : "bg-gray-200"
             } hover:bg-gray-300 
@@ -208,7 +109,6 @@ const Page6 = () => {
             En attente
           </button>
           <button
-            onClick={() => setSelectedTab("Prêtes")}
             className={`text-[#0C66E6] font-medium rounded-md ${
               selectedTab === "Prêtes" ? "bg-white" : "bg-gray-200"
             } hover:bg-gray-300 
@@ -255,18 +155,23 @@ const Page6 = () => {
             </div>
           )}
 
-          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={QuestionIcon} alt="Help" className="w-full h-full" />
+          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
+            <img
+              src={QuestionIcon}
+              alt="Help"
+              className="w-full h-full"
+              
+            />
           </div>
 
-          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={UserIcon} alt="User" className="w-full h-full" />
+          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
+            <img src={UserIcon} alt="User" className="w-full h-full" onClick={toggleModal} />
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center flex-grow w-full">
+      <div className="flex flex-col items-center justify-center flex-grow w-full ">
         {orders.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full auto-rows-min">
             {filteredOrders.map((order) => (
@@ -300,8 +205,144 @@ const Page6 = () => {
           </>
         )}
       </div>
+
+      {/* Modal */}
+      {isOpen && (
+  <div
+    className="fixed h-[780px] w-[464px] mt-[4px] ml-[1200px] bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-6 overflow-y-auto"
+    role="dialog"
+  >
+    <h2 className="text-lg font-semibold text-gray-800 mb-4">Profil</h2>
+    <form className="space-y-4">
+      <div className="flex space-x-4">
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-700">
+            Nom*
+          </label>
+          <input
+            type="text"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Garcia"
+          />
+        </div>
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-700">
+            Prénom*
+          </label>
+          <input
+            type="text"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Leo"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Date de naissance*
+        </label>
+        <input
+          type="date"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="02/09/1980"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Numéro professionnel pharmacien*
+        </label>
+        <input
+          type="number"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="10101010101"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          SIRET*
+        </label>
+        <input
+          type="number"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="123 456 789 01234"
+        />
+      </div>
+      <div>
+  <label className="block text-sm font-medium text-gray-700">
+    Numéro de téléphone*
+  </label>
+  <div className="flex items-center">
+    <div className="flex items-center border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50">
+      <img
+        src={FlagIcon}
+        alt="flag"
+        className="w-5 h-5 mr-2"
+      />
+      <select
+        className="outline-none bg-transparent"
+      >
+        <option value="+33">+33</option>
+        {/* Add other country codes if needed */}
+      </select>
+    </div>
+    <input
+      type="text"
+      className="flex-1 border-t border-b border-r border-gray-300 rounded-r-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="9 32 54 92 09"
+    />
+  </div>
+</div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Nom de votre pharmacie*
+        </label>
+        <input
+          type="text"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Naturalia"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Adresse de votre pharmacie*
+        </label>
+        <input
+          type="text"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="12 Rue de la Santé, 75013 Paris, France"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Adresse mail de votre pharmacie*
+        </label>
+        <input
+          type="email"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="contact@pharmacie-naturalia.fr"
+        />
+      </div>
+      <div className="flex justify-end mt-4 space-x-4">
+        <button
+          type="button"
+          onClick={toggleModal}
+          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+        >
+          Annuler
+        </button>
+        <button
+          
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          Confirmer
+        </button>
+      </div>
+    </form>
+  </div>
+)}
+
     </div>
   );
-};
+}
 
-export default Page6;
+export default Page29;
