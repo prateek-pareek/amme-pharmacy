@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import QuestionIcon from "../assets/icons/question.svg";
-import UserIcon from "../assets/icons/user.svg";
-import FlagIcon from "../assets/icons/flag.svg";
+// import QuestionIcon from "../assets/icons/question.svg";
+// import UserIcon from "../assets/icons/user.svg";
+import { LuUser } from "react-icons/lu";
+// import FlagIcon from "../assets/icons/flag.svg";
 import OrderCard from "./OrderCard";
 import { CiSearch } from "react-icons/ci";
+import { SlQuestion } from "react-icons/sl";
+import { CiFlag1 } from "react-icons/ci";
+
+
 
 
 function Page29() {
@@ -156,16 +161,17 @@ function Page29() {
           )}
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
-            <img
+            {/* <img
               src={QuestionIcon}
               alt="Help"
               className="w-full h-full"
-              
-            />
+            /> */}
+            <SlQuestion />
           </div>
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
-            <img src={UserIcon} alt="User" className="w-full h-full" onClick={toggleModal} />
+            {/* <img src={UserIcon} alt="User" className="w-full h-full" onClick={toggleModal} /> */}
+            <LuUser onClick={toggleModal} size={24}/>
           </div>
         </div>
       </div>
@@ -272,11 +278,13 @@ function Page29() {
   </label>
   <div className="flex items-center">
     <div className="flex items-center border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50">
-      <img
+      {/* <img
         src={FlagIcon}
         alt="flag"
         className="w-5 h-5 mr-2"
-      />
+      /> */}
+
+        <CiFlag1 className="w-5 h-5 mr-2"/>
       <select
         className="outline-none bg-transparent"
       >
