@@ -28,7 +28,7 @@ const OrderCard = ({
           <h3 className="text-lg font-semibold text-white">{patientName}</h3>
           <span className="flex items-center text-white">
             {paymentStatus}
-            <img src={VectorIcon} alt="vector" className="w-4 h-4 ml-2" />
+            {/* <img src={VectorIcon} alt="vector" className="w-4 h-4 ml-2" /> */}
           </span>
         </div>
 
