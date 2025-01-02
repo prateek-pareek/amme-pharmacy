@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import Calendar from "./UI/Calendar";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import QuestionIcon from "../assets/icons/question.svg";
-import SearchIcon from "../assets/icons/search.svg";
 import UserIcon from "../assets/icons/user.svg";
-import MailIcon from "../assets/icons/mail.svg";
-import PhoneIcon from "../assets/icons/phone.svg";
 import FlagIcon from "../assets/icons/flag.svg";
 import OrderCard from "./OrderCard";
+import { CiSearch } from "react-icons/ci";
+
 
 function Page29() {
   const [date, setDate] = useState(new Date());
@@ -131,7 +129,8 @@ function Page29() {
         <div className="flex items-center space-x-4">
           {showSearch ? (
             <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 w-64 h-12 ">
-              <img src={SearchIcon} alt="Search" className="w-4 h-4 mr-2" />
+              {/* <img src={SearchIcon} alt="Search" className="w-4 h-4 mr-2" /> */}
+              <CiSearch  className="w-4 h-4 mr-2"/>
               <input
                 type="text"
                 value={searchQuery}
@@ -151,7 +150,8 @@ function Page29() {
               className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer hover:bg-gray-200"
               onClick={toggleSearch}
             >
-              <img src={SearchIcon} alt="Search" className="w-full h-full" />
+              {/* <img src={SearchIcon} alt="Search" className="w-full h-full" /> */}
+              <CiSearch className="w-full h-full"/>
             </div>
           )}
 

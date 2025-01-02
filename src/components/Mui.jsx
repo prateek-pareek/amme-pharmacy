@@ -31,7 +31,7 @@ const Mui = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen items-center justify-center gap-6 p-4">
+    <div className="flex flex-col md:flex-row h-[88vh] items-center justify-center gap-6 p-4">
       {/* Left Section with Image */}
       <div className="md:w-2/5 w-full flex items-center justify-center">
         <img
