@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import Calendar from "./UI/Calendar";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import QuestionIcon from "../assets/icons/question.svg";
-import SearchIcon from "../assets/icons/search.svg";
-import UserIcon from "../assets/icons/user.svg";
+// import QuestionIcon from "../assets/icons/question.svg";
+// import SearchIcon from "../assets/icons/search.svg";
+// import UserIcon from "../assets/icons/user.svg";
 import MailIcon from "../assets/icons/mail.svg";
 import PhoneIcon from "../assets/icons/phone.svg";
 import OrderCard from "./OrderCard";
+import { CiSearch } from "react-icons/ci";
+import { SlQuestion } from "react-icons/sl";
+import { LuUser } from "react-icons/lu";
+import { FaPhoneAlt } from "react-icons/fa";
+import { CiMail } from "react-icons/ci";
+
+
 
 function Page26() {
   const [date, setDate] = useState(new Date());
@@ -130,7 +137,8 @@ function Page26() {
         <div className="flex items-center space-x-4">
           {showSearch ? (
             <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 w-64 h-12 ">
-              <img src={SearchIcon} alt="Search" className="w-4 h-4 mr-2" />
+              {/* <img src={SearchIcon} alt="Search" className="w-4 h-4 mr-2" /> */}
+              <CiSearch  className="w-4 h-4 mr-2"/>
               <input
                 type="text"
                 value={searchQuery}
@@ -150,21 +158,24 @@ function Page26() {
               className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer hover:bg-gray-200"
               onClick={toggleSearch}
             >
-              <img src={SearchIcon} alt="Search" className="w-full h-full" />
+              {/* <img src={SearchIcon} alt="Search" className="w-full h-full" /> */}
+              <CiSearch className="w-full h-full"/>
             </div>
           )}
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
-            <img
-              src={QuestionIcon}
-              alt="Help"
-              className="w-full h-full"
-              onClick={toggleModal}
-            />
+            {/* <img
+                          src={QuestionIcon}
+                          alt="Help"
+                          className="w-full h-full"
+                        /> */}
+                        <SlQuestion />
           </div>
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={UserIcon} alt="User" className="w-full h-full" />
+            {/* <img src={UserIcon} alt="User" className="w-full h-full" onClick={toggleModal} /> */}
+                        <LuUser onClick={toggleModal} size={24}/>
+
           </div>
         </div>
       </div>
@@ -224,7 +235,8 @@ function Page26() {
             {/* Phone Contact */}
             <div className="flex items-center justify-between w-[391px] h-[68px] mt-1 bg-[#F6F7F9] p-3 rounded-md shadow-sm">
               <div className="flex items-center space-x-3">
-                <img src={PhoneIcon} alt="Phone" className="w-6 h-6" />
+                {/* <img src={PhoneIcon} alt="Phone" className="w-6 h-6" /> */}
+                <FaPhoneAlt className='w-6 h-6'/>
                 <p className="text-sm font-medium text-gray-800">+33 4 57 34 87 40</p>
               </div>
               <p className="text-xs text-gray-500">De 9h à 17h</p>
@@ -232,7 +244,8 @@ function Page26() {
             {/* Email Contact */}
             <div className="flex items-center w-[391px] h-[68px] mt-4 bg-[#F6F7F9] p-3 rounded-md shadow-sm">
               <div className="flex items-center space-x-3">
-                <img src={MailIcon} alt="Email" className="w-6 h-6" />
+                {/* <img src={MailIcon} alt="Email" className="w-6 h-6" /> */}
+                <CiMail className='w-6 h-6'/>
                 <p className="text-sm font-medium text-gray-800">support@amme.fr</p>
               </div>
             </div>

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import syringeIcon from "../assets/Syringe.png"; // Replace with the actual path if needed
-import QuestionIcon from "../assets/icons/question.svg"
-import SearchIcon from "../assets/icons/search.svg";
-import UserIcon from "../assets/icons/user.svg";
-import CalenderIcon from "../assets/icons/calender.svg";
+// import QuestionIcon from "../assets/icons/question.svg"
+// import SearchIcon from "../assets/icons/search.svg";
+// import UserIcon from "../assets/icons/user.svg";
+import { CiSearch } from "react-icons/ci";
+import { SlQuestion } from "react-icons/sl";
+import { LuUser } from "react-icons/lu";
 
 const Page5 = () => {
    const [selectedTab, setSelectedTab] = useState("En attente");
@@ -56,15 +58,18 @@ const Page5 = () => {
       {/* Icons */}
       <div className="flex items-center space-x-4">
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={QuestionIcon} alt="Help" className="w-full h-full" />
+            {/* <img src={QuestionIcon} alt="Help" className="w-full h-full" /> */}
+            <SlQuestion className="w-full h-full"/>
           </div>
       
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={SearchIcon} alt="Search" className="w-full h-full" />
+            {/* <img src={SearchIcon} alt="Search" className="w-full h-full" /> */}
+            <CiSearch className="w-full h-full"/>
           </div>
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            <img src={UserIcon} alt="User" className="w-full h-full" />
+            {/* <img src={UserIcon} alt="User" className="w-full h-full" /> */}
+            <LuUser className="w-full h-full"/>
           </div>
         </div>
       </div>
