@@ -6,73 +6,14 @@ import syringeIcon from "../assets/Syringe.png"; // Replace with the actual path
 import { CiSearch } from "react-icons/ci";
 import { SlQuestion } from "react-icons/sl";
 import { LuUser } from "react-icons/lu";
+import Header from "./UI/Header";
 
 const Page5 = () => {
    const [selectedTab, setSelectedTab] = useState("En attente");
 
   return (
     <div className="flex flex-col min-h-screen items-center bg-gray-50 p-4 w-full">
-      {/* Top Section: Date and Tabs */}
-      <div className="w-full px-2 flex items-center justify-between mb-8">
-        {/* Date Picker */}
-        <div className="flex items-center border rounded-md px-4 py-2 bg-white shadow-sm flex-grow-0">
-          {/* <img src={CalenderIcon} alt="Calendar" className="w-6 h-6" /> */}
-          <span className="text-gray-700 font-medium">Aujourd'hui - 19 Sep 2024</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-400 ml-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.292 7.707a1 1 0 011.416-1.414L10 9.585l3.292-3.292a1 1 0 011.416 1.414l-4 4a1 1 0 01-1.416 0l-4-4z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex-1 flex justify-center">
-          <button onClick={() => setSelectedTab("En attente")}
-          className={`text-[#0C66E6] font-medium rounded-md ${
-      selectedTab === "En attente" ? "bg-white" : "bg-gray-200"} hover:bg-gray-300 
-    }  focus:outline-none px-6 py-2 `}>
-            En attente
-          </button>
-          <button onClick={() => setSelectedTab("Prêtes")}
-    className={`text-[#0C66E6] font-medium rounded-md ${
-      selectedTab === "Prêtes" ? "bg-white" : "bg-gray-200"} hover:bg-gray-300 
-    }  focus:outline-none px-6 py-2 `}>
-            Prêtes  
-          </button>
-          <button onClick={() => setSelectedTab("Récupérées")}
-    className={`text-[#0C66E6] font-medium rounded-md ${
-      selectedTab === "Prêtes" ? "bg-white" : "bg-gray-200"} hover:bg-gray-300 
-    }  focus:outline-none px-6 py-2 `}>
-            Récupérées
-          </button>
-        </div>
-     
-
-      {/* Icons */}
-      <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            {/* <img src={QuestionIcon} alt="Help" className="w-full h-full" /> */}
-            <SlQuestion className="w-full h-full"/>
-          </div>
-      
-          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            {/* <img src={SearchIcon} alt="Search" className="w-full h-full" /> */}
-            <CiSearch className="w-full h-full"/>
-          </div>
-
-          <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow">
-            {/* <img src={UserIcon} alt="User" className="w-full h-full" /> */}
-            <LuUser className="w-full h-full"/>
-          </div>
-        </div>
-      </div>
+      <Header selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
       {/* Main Content */}
       <div className="flex flex-col items-center justify-center flex-grow">

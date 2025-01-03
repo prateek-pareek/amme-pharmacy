@@ -7,37 +7,42 @@ import { Link } from "react-router-dom";
 
 const Page4 = () => {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen items-center justify-center gap-6 p-4">
+    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-hidden">
+
       {/* Left Section with Image */}
-      <div className="md:w-2/5 w-full flex items-center justify-center bg-blue-500 rounded-lg">
-        <img src={image} alt="Doctor and Patients" className="w-full h-auto" />
+      <div className="md:w-[50%] w-full flex items-center ">
+
+        <img src={image} alt="Doctor and Patients" className="w-[85%] h-auto" />
       </div>
 
       {/* Right Section with Message */}
-      <div className="bg-white py-8 px-6 md:px-12 rounded-lg md:w-2/5 w-full text-center">
-        {/* Celebration Icon */}
-        <img src={icon} alt="Celebration Icon" className="mx-auto mb-4 h-12" />
+      <div className="md:pr-12 md:w-[50%] flex items-center justify-center">
 
-        {/* Success Message */}
-        <h1 className="text-2xl font-semibold mb-4">
-          Congratulations, your account is under review!
-        </h1>
-        <p className="text-gray-600 mb-6">
-          You will be able to log in once your account is validated.
-        </p>
+        <div className="bg-white py-8 px-6 md:px-8 rounded-lg md:w-2/5 w-full text-center">
+          {/* Celebration Icon */}
+          <img src={icon} alt="Celebration Icon" className="mx-auto mb-4 h-12" />
 
-        {/* Finish Button */}
-        <Link to="/page5">
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          className="mt-4"
-        //   onClick={() => alert("Thank you!")}
-          >
-          Finish
-        </Button>
-            </Link>
+          {/* Success Message */}
+          <h1 className="text-2xl font-semibold mb-4">
+          Félicitations votre compte est en cours de validation!
+          </h1>
+          <p className="text-gray-600 mb-6">
+          Vous pourrez vous identifier lorsque votre compte sera validé
+          </p>
+
+          {/* Finish Button */}
+          <Link to="/page6">
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              className="mt-4"
+            //   onClick={() => alert("Thank you!")}
+            >
+              Finish
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

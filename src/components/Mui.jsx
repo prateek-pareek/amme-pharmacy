@@ -31,120 +31,154 @@ const Mui = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[88vh] items-center justify-center gap-6 p-4">
+    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-hidden">
       {/* Left Section with Image */}
-      <div className="md:w-2/5 w-full flex items-center justify-center">
+      <div className="md:w-[50%] w-full flex items-center ">
         <img
-          src={image} 
+          src={image}
           alt="Logo"
-          className="w-full h-auto rounded-lg"
+          className="w-[85%] h-auto rounded-lg"
         />
       </div>
 
       {/* Right Section with Form */}
-      <div className="bg-white py-8 px-6 md:px-12 rounded-lg md:w-2/5 w-full">
-        {/* Top Icon */}
-        <img src={icon} alt="Icon" className="mx-auto mb-4 h-12" />
+      <div className="md:pr-12 md:w-[50%] flex items-center justify-center">
+        <div className="bg-white py-8 rounded-lg w-full md:w-[90%]  px-6">
+          {/* Top Icon */}
+          <div className="main pl-[180px]">
+          <img src={icon} alt="Icon" className=" mb-4 h-12" />
+          </div>
 
-        {/* Form Title */}
-        <h1 className="text-2xl font-semibold text-center mb-6">Informations du titulaire</h1>
+          {/* Form Title */}
+          <h1 className="text-2xl font-semibold text-left mb-6">Informations du titulaire</h1>
 
-        {/* Name Input */}
-        <div className="my-2">
-          <p className="my-2">Nom de famille</p>
-          <TextField label="Nom de famille" variant="outlined" fullWidth required />
-        </div>
-        <div className="my-2">
-          <p className="my-2">Prénom</p>
-          <TextField label="Prénom" variant="outlined" fullWidth required />
-        </div>
-
-        {/* Date of Birth Input */}
-        <div className="my-2">
-          <p className="my-2">Date de naissance</p>
-          <TextField
-            label="Date de naissance"
-            variant="outlined"
-            type="date"
-            fullWidth
-            required
-            InputLabelProps={{ shrink: true }}
-          />
-        </div>
-
-        {/* Professional ID Input */}
-        <div className="my-2">
-          <p className="my-2">ID professionnel</p>
-          <TextField label="Numéro professionnel de pharmacien" variant="outlined" fullWidth required />
-        </div>
-
-        {/* SIRET Input */}
-        <div className="my-2">
-          <p className="my-2">SIRET</p>
-          <TextField label="SIRET" variant="outlined" fullWidth required />
-        </div>
-
-        {/* Phone Number Input with Country Code */}
-        <div className="my-2">
-          <div className="flex flex-col md:flex-row items-center gap-4">
+          {/* Name Input */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">Nom</p>
             <TextField
-              select
-              label="Code"
-              value={selectedCountry}
-              onChange={handleCountryChange}
-              className="md:w-1/3 w-full"
-              variant="outlined"
-            >
-              {countryOptions.map((country) => (
-                <MenuItem key={country.code} value={country.code}>
-                  <div className="flex items-center gap-2">
-                    <ReactWorldFlags code={country.code} className="w-6 h-4" />
-                    {country.dialCode}
-                  </div>
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              label="Numéro de téléphone"
               variant="outlined"
               fullWidth
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
               required
+              size="small"
+              sx={{ maxWidth: '400px' }}
             />
           </div>
-        </div>
 
-        {/* Terms and Conditions */}
-        <div className="mt-4">
-          <FormControlLabel
-            control={<Checkbox required />}
-            label={
-              <span>
-                J'accepte les <b>Conditions Générales d'Utilisation</b>, les {" "}
-                <a
-                  href="/payment-terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
-                  Conditions Générales d'Utilisation du Service de Paiement
-                </a>
-                , et je reconnais avoir lu la {" "}
-                <b>Politique de Confidentialité</b>.
-              </span>
-            }
-          />
-        </div>
+          {/* First Name Input */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">Prénom</p>
+            <TextField
+              variant="outlined"
+              fullWidth
+              required
+              size="small"
+              sx={{ maxWidth: '400px' }}
+            />
+          </div>
 
-        {/* Submit Button */}
-        <Link to="/page2">
-            <Button variant="contained" color="primary" fullWidth className="mt-4">
-                Accepter et Continuer
+          {/* Date of Birth Input */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">Date de naissance</p>
+            <TextField
+              variant="outlined"
+              type="date"
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+              size="small"
+              sx={{ maxWidth: '400px' }}
+            />
+          </div>
+
+          {/* Professional ID Input */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">Nom Professionnel Pharmacien</p>
+            <TextField
+              variant="outlined"
+              fullWidth
+              required
+              size="small"
+              sx={{ maxWidth: '400px' }}
+            />
+          </div>
+
+          {/* SIRET Input */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">SIRET</p>
+            <TextField
+              variant="outlined"
+              fullWidth
+              required
+              size="small"
+              sx={{ maxWidth: '400px' }}
+            />
+          </div>
+
+          {/* Phone Number Input with Country Code */}
+          <div className="mb-4">
+            <p className="mb-2 text-left">Numéro de téléphone</p>
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <TextField
+                select
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="md:w-1/3 w-full"
+                variant="outlined"
+                size="small"
+                sx={{ maxWidth: "150px", backgroundColor: "#e2e8f0" }}
+                
+              >
+                {countryOptions.map((country) => (
+                  <MenuItem key={country.code} value={country.code}>
+                    <div className="flex items-center gap-2">
+                      <ReactWorldFlags code={country.code} className="w-6 h-4" />
+                      {country.dialCode}
+                    </div>
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                label="ex: 087678866"
+                variant="outlined"
+                fullWidth
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                required
+                size="small"
+                sx={{ maxWidth: '250px' }}
+              />
+            </div>
+          </div>
+
+          {/* Terms and Conditions */}
+          <div className="my-10 flex items-start">
+            <Checkbox required />
+            <p className="text-sm px-2 text-left">J'accepte les Conditions Générales d'Utilisation, les <br />  <a
+              href="/payment-terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Conditions Générales d'Utilisation du Service de Paiement,
+            </a><br />et je  reconnais avoir lu la <u>Politique de Confidentialité</u>.</p>
+          </div>
+
+          {/* Submit Button */}
+          <Link to="/page2">
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              className="mt-4"
+              sx={{ maxWidth: "400px", marginX: 'auto' }}
+            >
+              Accepter et Continuer
             </Button>
-        </Link>
-        
+          </Link>
+        </div>
       </div>
+
     </div>
   );
 };
