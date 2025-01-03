@@ -12,7 +12,7 @@ const Page4 = () => {
       {/* Left Section with Image */}
       <div className="md:w-[50%] w-full flex items-center ">
 
-        <img src={image} alt="Doctor and Patients" className="w-[85%] h-auto" />
+        <img src={image} alt="Doctor and Patients" className="w-[80%] h-auto" />
       </div>
 
       {/* Right Section with Message */}

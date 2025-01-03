@@ -17,7 +17,7 @@ const Page2 = () => {
               <img
                 src={image}
                 alt="Logo"
-                className="w-[85%] h-auto rounded-lg"
+                className="w-[80%] h-auto rounded-lg"
               />
             </div>
 
