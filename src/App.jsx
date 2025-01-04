@@ -9,6 +9,13 @@ import Page6 from './components/Page6';
 import Page26 from './components/Page26';
 import Page29 from './components/Page29';
 
+import '@fontsource/inter/400.css'; // Normal weight
+import '@fontsource/inter/600.css'; // Semi-bold weight
+import '@fontsource/inter/700.css'; // Bold weight
+
+// import '@fontsource/inter/variable.css'; 
+
+
 function App() {
 
   return (
