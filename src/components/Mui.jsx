@@ -4,6 +4,8 @@ import ReactWorldFlags from "react-world-flags";
 import icon from "../assets/Frame 401.png"; // Adjust path if needed
 import image from "../assets/Frame 436.png";
 import { Link } from "react-router-dom";
+import LoginPagesInspector from "./UI/LoginPagesInspecter";
+// import LoginPagesInspector from "./UI/LoginPagesInspector"; // Import the inspector component
 
 const countryOptions = [
   { code: "US", dialCode: "+1", label: "États-Unis" },
@@ -21,6 +23,7 @@ const countryOptions = [
 const Mui = () => {
   const [selectedCountry, setSelectedCountry] = useState("FR");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Add state for current page
 
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);
@@ -31,21 +34,22 @@ const Mui = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-auto relative">
       {/* Left Section with Image */}
-      <div className="md:w-[50%] w-full flex items-center ">
+      <div className="md:w-[50%] w-full flex flex-w items-center ">
         <img
           src={image}
           alt="Logo"
-          className="md:w-[80%] h-auto rounded-lg"
+          className="md:w-4/5 min-h-[800px] h-[800px] rounded-lg"
         />
       </div>
+
 
       {/* Right Section with Form */}
       <div className="md:pr-12 md:w-[50%] flex items-center justify-center">
         <div className="bg-white py-8 rounded-lg w-full md:w-[90%]  px-6">
           {/* Top Icon */}
-          <div className="main pl-[180px]">
+          <div className="main pl-[180px] ">
           <img src={icon} alt="Icon" className=" mb-4 h-12" />
           </div>
 
@@ -54,7 +58,7 @@ const Mui = () => {
 
           {/* Name Input */}
           <div className="mb-4">
-            <p className="mb-2 text-left">Nom</p>
+            <p className="mb-2 text-left">Nom*</p>
             <TextField
               variant="outlined"
               fullWidth
@@ -64,9 +68,9 @@ const Mui = () => {
             />
           </div>
 
-          {/* First Name Input */}
+          {/* 2nd Name Input */}
           <div className="mb-4">
-            <p className="mb-2 text-left">Prénom</p>
+            <p className="mb-2 text-left">Prénom*</p>
             <TextField
               variant="outlined"
               fullWidth
@@ -78,13 +82,11 @@ const Mui = () => {
 
           {/* Date of Birth Input */}
           <div className="mb-4">
-            <p className="mb-2 text-left">Date de naissance</p>
+            <p className="mb-2 text-left">Date de naissance*</p>
             <TextField
               variant="outlined"
-              type="date"
               fullWidth
               required
-              InputLabelProps={{ shrink: true }}
               size="small"
               sx={{ maxWidth: '400px' }}
             />
@@ -92,7 +94,7 @@ const Mui = () => {
 
           {/* Professional ID Input */}
           <div className="mb-4">
-            <p className="mb-2 text-left">Nom Professionnel Pharmacien</p>
+            <p className="mb-2 text-left">Nom Professionnel Pharmacien*</p>
             <TextField
               variant="outlined"
               fullWidth
@@ -104,13 +106,13 @@ const Mui = () => {
 
           {/* SIRET Input */}
           <div className="mb-4">
-            <p className="mb-2 text-left">SIRET</p>
+            <p className="mb-2 text-left">SIRET*</p>
             <TextField
               variant="outlined"
               fullWidth
               required
               size="small"
-              sx={{ maxWidth: '400px' }}
+              sx={{ maxWidth: '400px',  }}
             />
           </div>
 
@@ -125,7 +127,23 @@ const Mui = () => {
                 className="md:w-1/3 w-full"
                 variant="outlined"
                 size="small"
-                sx={{ maxWidth: "150px", backgroundColor: "#e2e8f0" }}
+                sx={{
+                  maxWidth: "150px",
+                  backgroundColor: "#e2e8f0",  // Set background color
+                  borderColor: "#e2e8f0",      // Set border color to the same as the background
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: "#e2e8f0", // Ensure the border of the fieldset is the same color
+                      
+                    },
+                    '&:hover fieldset': {
+                      borderColor: "#e2e8f0", // Make sure the hover state matches too
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: "#e2e8f0", // Make sure the focused state matches as well
+                    }
+                  }
+                }}
                 
               >
                 {countryOptions.map((country) => (
@@ -179,7 +197,13 @@ const Mui = () => {
         </div>
       </div>
 
+
+      {/* Inspector */}
+      {/* <LoginPagesInspector currentPage={currentPage} /> */}
+      <LoginPagesInspector currentPage={currentPage} totalPages={3} />
     </div>
+
+
   );
 };
 

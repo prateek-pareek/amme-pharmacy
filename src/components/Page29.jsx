@@ -104,26 +104,23 @@ function Page29() {
         {/* Tabs */}
         <div className="flex-1 flex justify-center">
           <button
-            className={`text-[#0C66E6] font-medium rounded-md ${
-              selectedTab === "En attente" ? "bg-white" : "bg-gray-200"
-            } hover:bg-gray-300 
+            className={`text-[#0C66E6] font-medium rounded-md ${selectedTab === "En attente" ? "bg-white" : "bg-gray-200"
+              } hover:bg-gray-300 
     }  focus:outline-none px-6 py-2 `}
           >
             En attente
           </button>
           <button
-            className={`text-[#0C66E6] font-medium rounded-md ${
-              selectedTab === "Prêtes" ? "bg-white" : "bg-gray-200"
-            } hover:bg-gray-300 
+            className={`text-[#0C66E6] font-medium rounded-md ${selectedTab === "Prêtes" ? "bg-white" : "bg-gray-200"
+              } hover:bg-gray-300 
     }  focus:outline-none px-6 py-2 `}
           >
             Prêtes
           </button>
           <button
             onClick={() => setSelectedTab("Récupérées")}
-            className={`text-[#0C66E6] font-medium rounded-md ${
-              selectedTab === "Récupérées" ? "bg-white" : "bg-gray-200"
-            } hover:bg-gray-300 
+            className={`text-[#0C66E6] font-medium rounded-md ${selectedTab === "Récupérées" ? "bg-white" : "bg-gray-200"
+              } hover:bg-gray-300 
     }  focus:outline-none px-6 py-2 `}
           >
             Récupérées
@@ -135,7 +132,7 @@ function Page29() {
           {showSearch ? (
             <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 w-64 h-12 ">
               {/* <img src={SearchIcon} alt="Search" className="w-4 h-4 mr-2" /> */}
-              <CiSearch  className="w-4 h-4 mr-2"/>
+              <CiSearch className="w-4 h-4 mr-2" />
               <input
                 type="text"
                 value={searchQuery}
@@ -156,7 +153,7 @@ function Page29() {
               onClick={toggleSearch}
             >
               {/* <img src={SearchIcon} alt="Search" className="w-full h-full" /> */}
-              <CiSearch className="w-full h-full"/>
+              <CiSearch className="w-full h-full" />
             </div>
           )}
 
@@ -171,7 +168,7 @@ function Page29() {
 
           <div className="w-12 h-12 rounded-lg p-3 bg-[#F6F7F9] shadow cursor-pointer">
             {/* <img src={UserIcon} alt="User" className="w-full h-full" onClick={toggleModal} /> */}
-            <LuUser onClick={toggleModal} size={24}/>
+            <LuUser onClick={toggleModal} size={24} />
           </div>
         </div>
       </div>
@@ -214,140 +211,140 @@ function Page29() {
 
       {/* Modal */}
       {isOpen && (
-  <div
-    className="fixed h-[780px] w-[464px] mt-[4px] ml-[1200px] bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-6 overflow-y-auto"
-    role="dialog"
-  >
-    <h2 className="text-lg font-semibold text-gray-800 mb-4">Profil</h2>
-    <form className="space-y-4">
-      <div className="flex space-x-4">
-        <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">
-            Nom*
-          </label>
-          <input
-            type="text"
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Garcia"
-          />
-        </div>
-        <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">
-            Prénom*
-          </label>
-          <input
-            type="text"
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Leo"
-          />
-        </div>
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Date de naissance*
-        </label>
-        <input
-          type="date"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="02/09/1980"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Numéro professionnel pharmacien*
-        </label>
-        <input
-          type="number"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="10101010101"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          SIRET*
-        </label>
-        <input
-          type="number"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="123 456 789 01234"
-        />
-      </div>
-      <div>
-  <label className="block text-sm font-medium text-gray-700">
-    Numéro de téléphone*
-  </label>
-  <div className="flex items-center">
-    <div className="flex items-center border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50">
-      {/* <img
+        <div
+          className="fixed h-[780px] w-[464px] mt-[4px] ml-[1200px] bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-6 overflow-y-auto"
+          role="dialog"
+        >
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Profil</h2>
+          <form className="space-y-4">
+            <div className="flex space-x-4">
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700">
+                  Nom*
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Garcia"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700">
+                  Prénom*
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Leo"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Date de naissance*
+              </label>
+              <input
+                type="date"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="02/09/1980"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Numéro professionnel pharmacien*
+              </label>
+              <input
+                type="number"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="10101010101"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                SIRET*
+              </label>
+              <input
+                type="number"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="123 456 789 01234"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Numéro de téléphone*
+              </label>
+              <div className="flex items-center">
+                <div className="flex items-center border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50">
+                  {/* <img
         src={FlagIcon}
         alt="flag"
         className="w-5 h-5 mr-2"
       /> */}
 
-        <CiFlag1 className="w-5 h-5 mr-2"/>
-      <select
-        className="outline-none bg-transparent"
-      >
-        <option value="+33">+33</option>
-        {/* Add other country codes if needed */}
-      </select>
-    </div>
-    <input
-      type="text"
-      className="flex-1 border-t border-b border-r border-gray-300 rounded-r-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-      placeholder="9 32 54 92 09"
-    />
-  </div>
-</div>
+                  <CiFlag1 className="w-5 h-5 mr-2" />
+                  <select
+                    className="outline-none bg-transparent"
+                  >
+                    <option value="+33">+33</option>
+                    {/* Add other country codes if needed */}
+                  </select>
+                </div>
+                <input
+                  type="text"
+                  className="flex-1 border-t border-b border-r border-gray-300 rounded-r-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="9 32 54 92 09"
+                />
+              </div>
+            </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Nom de votre pharmacie*
-        </label>
-        <input
-          type="text"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Naturalia"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Adresse de votre pharmacie*
-        </label>
-        <input
-          type="text"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="12 Rue de la Santé, 75013 Paris, France"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Adresse mail de votre pharmacie*
-        </label>
-        <input
-          type="email"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="contact@pharmacie-naturalia.fr"
-        />
-      </div>
-      <div className="flex justify-end mt-4 space-x-4">
-        <button
-          type="button"
-          onClick={toggleModal}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
-        >
-          Annuler
-        </button>
-        <button
-          
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Confirmer
-        </button>
-      </div>
-    </form>
-  </div>
-)}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Nom de votre pharmacie*
+              </label>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Naturalia"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Adresse de votre pharmacie*
+              </label>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="12 Rue de la Santé, 75013 Paris, France"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Adresse mail de votre pharmacie*
+              </label>
+              <input
+                type="email"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="contact@pharmacie-naturalia.fr"
+              />
+            </div>
+            <div className="flex justify-end mt-4 space-x-4">
+              <button
+                type="button"
+                onClick={toggleModal}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+              >
+                Annuler
+              </button>
+              <button
+
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Confirmer
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
     </div>
   );
