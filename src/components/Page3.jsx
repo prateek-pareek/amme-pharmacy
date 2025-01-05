@@ -17,7 +17,8 @@ const Page2 = () => {
         <img
           src={image}
           alt="Logo"
-          className="w-[80%] h-auto rounded-lg"
+          className="md:w-4/5 min-h-[95vh] h-[95vh] rounded-lg"
+
         />
       </div>
 
@@ -38,7 +39,7 @@ const Page2 = () => {
           <div className="mb-4">
             <p className="mb-2">Nom de votre pharmacie*</p>
             <TextField
-              // label="Adresse e-mail"
+              // label="Adresse e-mail" 
               variant="outlined"
               fullWidth
               required

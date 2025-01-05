@@ -40,7 +40,7 @@ const Mui = () => {
         <img
           src={image}
           alt="Logo"
-          className="md:w-4/5 min-h-[800px] h-[800px] rounded-lg"
+          className="md:w-4/5 min-h-[95vh] h-[95vh] rounded-lg"
         />
       </div>
 
