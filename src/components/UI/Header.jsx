@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { format, isSameDay, isBefore, isAfter } from "date-fns";
 import { fr } from "date-fns/locale";
-import Calendar from "./Calendar"; // Adjust path if needed
+import Calendar from "./Calendar";
 import { CiSearch, CiCalendar, CiFlag1, CiMail } from "react-icons/ci";
 import { SlQuestion } from "react-icons/sl";
 import { LuUser } from "react-icons/lu";
-import { FaPhoneAlt } from "react-icons/fa";
-import ProfileModal from "./ProfileModal"; // Adjust the path if needed
-import HelpModal from "./HelpModal"; // Adjust the path if needed
+import ProfileModal from "./ProfileModal";
+import HelpModal from "./HelpModal";
 
 const Header = ({ selectedTab, setSelectedTab }) => {
-  const [date, setDate] = useState(new Date()); // Internal state for date
+  const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,12 +17,27 @@ const Header = ({ selectedTab, setSelectedTab }) => {
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const calendarRef = useRef(null);
 
-  const formattedDate = date
-    ? format(date, "PPP", { locale: fr })
-    : "Invalid Date";
+  const formatDateRange = () => {
+    if (!dateRange.startDate) {
+      return "Aujourd'hui";
+    }
+    
+    const startFormatted = format(dateRange.startDate, "dd MMM", { locale: fr });
+    if (!dateRange.endDate) {
+      return startFormatted;
+    }
+    
+    const endFormatted = format(dateRange.endDate, "dd MMM", { locale: fr });
+    return `${startFormatted} au ${endFormatted}`;
+  };
 
   const toggleCalendar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleReset = (e) => {
+    e.stopPropagation(); // Prevent calendar from opening
+    setDateRange({ startDate: null, endDate: null });
   };
 
   const toggleSearch = () => {
@@ -59,54 +73,72 @@ const Header = ({ selectedTab, setSelectedTab }) => {
     };
   }, [isOpen]);
 
+  const isDateRangeSelected = dateRange.startDate && dateRange.endDate;
+
   return (
     <div className="w-full py-5 flex items-center justify-between shadow-sm shadow-b-0 border-b-2 mb-7">
-      {/* Date Picker */}
-      <div className="relative inline-block" ref={calendarRef}>
-        <div
-          className="flex items-center border rounded-md px-4 py-2 bg-white shadow-sm cursor-pointer"
-          onClick={toggleCalendar}
-        >
-          <CiCalendar className="h-5 w-5 text-gray-400 mr-2" />
-          <span className="text-gray-700 font-medium">Aujourd'hui - </span>
-          <span className="text-gray-700 font-medium">{formattedDate}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`h-5 w-5 text-gray-400 ml-2 ${isOpen ? "transform rotate-180" : ""
-              }`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
+      <div className="flex items-center gap-2">
+        {/* Date Picker */}
+        <div className="relative inline-block" ref={calendarRef}>
+          <div
+            className={`flex items-center rounded-md px-4 py-2 cursor-pointer ${
+              isDateRangeSelected ? 'bg-blue-500 text-white' : 'bg-white border shadow-sm'
+            }`}
+            onClick={toggleCalendar}
           >
-            <path
-              fillRule="evenodd"
-              d="M5.292 7.707a1 1 0 011.416-1.414L10 9.585l3.292-3.292a1 1 0 011.416 1.414l-4 4a1 1 0 01-1.416 0l-4-4z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        {isOpen && (
-          <div className="absolute top-full mt-2 z-10 bg-white border rounded-md shadow-lg">
-            <Calendar
-              selected={date}
-              onSelectRange={({ startDate, endDate }) => {
-                setDate(startDate);
-                setIsOpen(false);
-              }}
-              dayClassName={(date) => {
-                if (isSameDay(date, new Date())) return "text-[#0c66e6]";
-                if (isBefore(date, new Date())) return "text-[#818ea0]";
-                if (isAfter(date, new Date())) return "text-[#151515]";
-                return "";
-              }}
-              firstDayOfWeek={1} // Start week from Monday (1)
-              locale={fr}
-            />
+            <CiCalendar className={`h-5 w-5 mr-2 ${isDateRangeSelected ? 'text-white' : 'text-gray-400'}`} />
+            <span className={`font-medium ${isDateRangeSelected ? 'text-white' : 'text-gray-700'}`}>
+              {formatDateRange()}
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-5 w-5 ml-2 ${isDateRangeSelected ? 'text-white' : 'text-gray-400'} ${
+                isOpen ? "transform rotate-180" : ""
+              }`}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.292 7.707a1 1 0 011.416-1.414L10 9.585l3.292-3.292a1 1 0 011.416 1.414l-4 4a1 1 0 01-1.416 0l-4-4z"
+                clipRule="evenodd"
+              />
+            </svg>
           </div>
+          {isOpen && (
+            <div className="absolute top-full mt-2 z-10">
+              <Calendar
+                onSelectRange={(range) => {
+                  setDateRange(range);
+                  setIsOpen(false);
+                }}
+                dayClassName={(date) => {
+                  if (isSameDay(date, new Date())) return "text-[#0c66e6]";
+                  if (isBefore(date, new Date())) return "text-[#818ea0]";
+                  if (isAfter(date, new Date())) return "text-[#151515]";
+                  return "";
+                }}
+                firstDayOfWeek={1}
+                locale={fr}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Reset Button */}
+        {isDateRangeSelected && (
+          <button
+            onClick={handleReset}
+            className="px-4 py-2 text-blue-500 hover:text-blue-700 font-medium"
+          >
+            Réinitialiser
+          </button>
         )}
       </div>
 
+      {/* Rest of the header content remains the same */}
       {/* Tabs */}
-      <div className="flex-1 flex justify-center ">
+      <div className="flex-1 flex justify-center">
         <div className="p-2 bg-gray-100 rounded-lg">
           <button
             onClick={() => setSelectedTab("En attente")}
@@ -176,10 +208,7 @@ const Header = ({ selectedTab, setSelectedTab }) => {
         </div>
       </div>
 
-      {/* Profile Modal */}
       <ProfileModal isOpen={isProfileModalOpen} toggleModal={toggleProfileModal} />
-
-      {/* Help Modal */}
       <HelpModal isOpen={isHelpModalOpen} toggleModal={toggleHelpModal} />
     </div>
   );

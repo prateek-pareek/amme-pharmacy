@@ -100,7 +100,7 @@ const Calendar = ({ onSelectRange, dayClassName, firstDayOfWeek = 1, locale = fr
           const isPast = isBefore(day, new Date());
           const isFuture = isAfter(day, new Date());
           const className = dayClassName ? dayClassName(day) : "";
-          return (
+          return ( 
             <button
               key={index}
               onClick={() => handleDayClick(day)}

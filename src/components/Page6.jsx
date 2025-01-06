@@ -182,7 +182,7 @@ const Page6 = () => {
                   />
                 </div>
               ))}
-            </Masonry>
+            </Masonry> 
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center mt-12">

@@ -34,9 +34,9 @@ const Mui = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-auto relative">
+    <div className="flex flex-col md:flex-row h-screen items-center justify-between gap-6 p-4 overflow-auto relative">
       {/* Left Section with Image */}
-      <div className="md:w-[50%] w-full flex flex-w items-center ">
+      <div className="md:w-[50%] w-full flex items-center">
         <img
           src={image}
           alt="Logo"
@@ -44,13 +44,12 @@ const Mui = () => {
         />
       </div>
 
-
       {/* Right Section with Form */}
-      <div className="md:pr-12 md:w-[50%] flex items-center justify-center">
-        <div className="bg-white py-8 rounded-lg w-full md:w-[90%]  px-6">
+      <div className="md:pr-12 md:w-[50%] flex items-center justify-center h-full overflow-auto">
+        <div className="bg-white py-0 rounded-lg w-full md:w-[90%] px-6 h-full flex flex-col justify-between overflow-y-auto">
           {/* Top Icon */}
-          <div className="main pl-[180px] ">
-          <img src={icon} alt="Icon" className=" mb-4 h-12" />
+          <div className="main pl-[180px]">
+            <img src={icon} alt="Icon" className="mb-4 h-12" />
           </div>
 
           {/* Form Title */}
@@ -112,7 +111,7 @@ const Mui = () => {
               fullWidth
               required
               size="small"
-              sx={{ maxWidth: '400px',  }}
+              sx={{ maxWidth: '400px' }}
             />
           </div>
 
@@ -134,7 +133,6 @@ const Mui = () => {
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {
                       borderColor: "#e2e8f0", // Ensure the border of the fieldset is the same color
-                      
                     },
                     '&:hover fieldset': {
                       borderColor: "#e2e8f0", // Make sure the hover state matches too
@@ -144,7 +142,6 @@ const Mui = () => {
                     }
                   }
                 }}
-                
               >
                 {countryOptions.map((country) => (
                   <MenuItem key={country.code} value={country.code}>
@@ -170,7 +167,7 @@ const Mui = () => {
           </div>
 
           {/* Terms and Conditions */}
-          <div className="my-10 flex items-start">
+          <div className="my-6 flex items-start">
             <Checkbox required />
             <p className="text-sm px-2 text-left">J'accepte les Conditions Générales d'Utilisation, les <br />  <a
               href="/payment-terms"
@@ -197,13 +194,9 @@ const Mui = () => {
         </div>
       </div>
 
-
       {/* Inspector */}
-      {/* <LoginPagesInspector currentPage={currentPage} /> */}
       <LoginPagesInspector currentPage={currentPage} totalPages={3} />
     </div>
-
-
   );
 };
 

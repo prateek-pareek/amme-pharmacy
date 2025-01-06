@@ -28,20 +28,19 @@ const Page2 = () => {
   }, [password]);
 
   return (
-    <div className="flex flex-col md:flex-row h-[100vh] items-center justify-between gap-6 p-4 overflow-auto relative">
+    <div className="flex flex-col md:flex-row h-screen items-center justify-between gap-6 p-4 overflow-auto relative">
       {/* Left Section with Image */}
       <div className="md:w-[50%] w-full flex items-center">
         <img
           src={image}
           alt="Logo"
           className="md:w-4/5 min-h-[95vh] h-[95vh] rounded-lg"
-
         />
       </div>
 
       {/* Right Section with Form */}
-      <div className="md:pr-12 md:w-[50%] flex items-center justify-center">
-        <div className="bg-white py-8 rounded-lg w-full md:w-[90%] px-6">
+      <div className="md:pr-12 md:w-[50%] flex items-center justify-center h-full overflow-auto">
+        <div className="bg-white py-8 rounded-lg w-full md:w-[90%] px-6 h-full flex flex-col justify-between overflow-y-auto">
           {/* Top Icon */}
           <div className="main pl-[180px]">
             <img src={icon} alt="Icon" className="mb-4 h-12" />
