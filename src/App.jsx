@@ -13,7 +13,15 @@ import '@fontsource/inter/400.css'; // Normal weight
 import '@fontsource/inter/600.css'; // Semi-bold weight
 import '@fontsource/inter/700.css'; // Bold weight
 
-// import '@fontsource/inter/variable.css'; 
+/**
+ * Main application component that sets up the routing structure.
+ *
+ * This component leverages React Router's BrowserRouter and Routes to map various URL paths
+ * to their respective page components. The root path ("/") and "/page1" both render the Step01 component,
+ * while the paths "/page2", "/page3", "/page4", "/page5", "/page6", "/page26", and "/page29" map to their corresponding pages.
+ *
+ * @returns {JSX.Element} The application's routing configuration.
+ */
 
 
 function App() {
