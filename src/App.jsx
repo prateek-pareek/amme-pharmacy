@@ -1,6 +1,6 @@
 import { BrowserRouter,Link,Route,Routes } from 'react-router-dom';
 
-import Mui from "./components/Mui"
+import Step01 from "./components/step01"
 import Page2 from './components/Page2';
 import Page3 from './components/Page3';
 import Page4 from './components/Page4';
@@ -21,8 +21,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Mui/>} />
-        <Route path="/page1" element={<Mui/>} />
+      <Route path="/" element={<Step01/>} />
+        <Route path="/page1" element={<Step01/>} />
         <Route path="/page2" element={<Page2/>} />
         <Route path="/page3" element={<Page3/>} />
         <Route path="/page4" element={<Page4/>} />
