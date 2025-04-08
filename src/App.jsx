@@ -8,6 +8,7 @@ import Page5 from './components/Page5';
 import Page6 from './components/Page6';
 import Page26 from './components/Page26';
 import Page29 from './components/Page29';
+import LoginPage from './components/loginPage';
 
 import '@fontsource/inter/400.css'; // Normal weight
 import '@fontsource/inter/600.css'; // Semi-bold weight
@@ -30,6 +31,7 @@ function App() {
         <Route path="/page6" element={<Page6/>} />
         <Route path='/page26' element={<Page26/>} />
         <Route path='/page29' element={<Page29/>}/>
+        <Route path='/LoginPage' element= {<LoginPage/>}/>
       </Routes>
     </BrowserRouter>
   )
