@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { TextField, Button, Checkbox, FormControlLabel, MenuItem } from "@mui/material";
+import { TextField, Button, Checkbox, MenuItem } from "@mui/material";
 import ReactWorldFlags from "react-world-flags";
-import icon from "../assets/Frame 401.png"; // Adjust path if needed
+import icon from "../assets/Frame 401.png";
 import image from "../assets/Frame 436.png";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoginPagesInspector from "./UI/LoginPagesInspecter";
-// import LoginPagesInspector from "./UI/LoginPagesInspector"; // Import the inspector component
+import { POST } from "../backend/axiosconfig"; // Adjust path to your axios utility
 
 const countryOptions = [
   { code: "US", dialCode: "+1", label: "États-Unis" },
@@ -23,14 +23,36 @@ const countryOptions = [
 const Mui = () => {
   const [selectedCountry, setSelectedCountry] = useState("FR");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // Add state for current page
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState("");
+  const [professionalPharmacistNumber, setProfessionalPharmacistNumber] = useState("");
+  const [siretNumber, setSiretNumber] = useState("");
+  const [currentPage] = useState(1);
+  const navigate = useNavigate();
 
-  const handleCountryChange = (event) => {
-    setSelectedCountry(event.target.value);
-  };
+  const handleSubmit = () => {
+    const payload = {
+      firstName,
+      lastName,
+      dob,
+      professionalPharmacistNumber,
+      siretNumber,
+      phoneNumber,
+    };
 
-  const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
+    POST(
+      "/pharmacist/step1",
+      payload,
+      (res) => {
+        console.log("Success:", res);
+        navigate("/page2");
+      },
+      (err) => {
+        console.error("API Error:", err);
+        alert("Erreur lors de l'envoi du formulaire.");
+      }
+    );
   };
 
   return (
@@ -47,15 +69,13 @@ const Mui = () => {
       {/* Right Section with Form */}
       <div className="md:pr-12 md:w-[50%] flex items-center justify-center h-full overflow-auto">
         <div className="bg-white py-0 rounded-lg w-full md:w-[90%] px-6 h-full flex flex-col justify-between overflow-y-auto">
-          {/* Top Icon */}
           <div className="main pl-[180px]">
             <img src={icon} alt="Icon" className="mb-4 h-12" />
           </div>
 
-          {/* Form Title */}
           <h1 className="text-2xl font-semibold text-left mb-6">Informations du titulaire</h1>
 
-          {/* Name Input */}
+          {/* First Name */}
           <div className="mb-4">
             <p className="mb-2 text-left">Nom*</p>
             <TextField
@@ -63,11 +83,13 @@ const Mui = () => {
               fullWidth
               required
               size="small"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               sx={{ maxWidth: '400px' }}
             />
           </div>
 
-          {/* 2nd Name Input */}
+          {/* Last Name */}
           <div className="mb-4">
             <p className="mb-2 text-left">Prénom*</p>
             <TextField
@@ -75,11 +97,13 @@ const Mui = () => {
               fullWidth
               required
               size="small"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               sx={{ maxWidth: '400px' }}
             />
           </div>
 
-          {/* Date of Birth Input */}
+          {/* DOB */}
           <div className="mb-4">
             <p className="mb-2 text-left">Date de naissance*</p>
             <TextField
@@ -87,11 +111,13 @@ const Mui = () => {
               fullWidth
               required
               size="small"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
               sx={{ maxWidth: '400px' }}
             />
           </div>
 
-          {/* Professional ID Input */}
+          {/* Pharmacist Number */}
           <div className="mb-4">
             <p className="mb-2 text-left">Nom Professionnel Pharmacien*</p>
             <TextField
@@ -99,11 +125,13 @@ const Mui = () => {
               fullWidth
               required
               size="small"
+              value={professionalPharmacistNumber}
+              onChange={(e) => setProfessionalPharmacistNumber(e.target.value)}
               sx={{ maxWidth: '400px' }}
             />
           </div>
 
-          {/* SIRET Input */}
+          {/* SIRET */}
           <div className="mb-4">
             <p className="mb-2 text-left">SIRET*</p>
             <TextField
@@ -111,36 +139,31 @@ const Mui = () => {
               fullWidth
               required
               size="small"
+              value={siretNumber}
+              onChange={(e) => setSiretNumber(e.target.value)}
               sx={{ maxWidth: '400px' }}
             />
           </div>
 
-          {/* Phone Number Input with Country Code */}
+          {/* Phone Number + Country Code */}
           <div className="mb-4">
             <p className="mb-2 text-left">Numéro de téléphone</p>
             <div className="flex flex-col md:flex-row items-center gap-4">
               <TextField
                 select
                 value={selectedCountry}
-                onChange={handleCountryChange}
+                onChange={(e) => setSelectedCountry(e.target.value)}
                 className="md:w-1/3 w-full"
                 variant="outlined"
                 size="small"
                 sx={{
                   maxWidth: "150px",
-                  backgroundColor: "#e2e8f0",  // Set background color
-                  borderColor: "#e2e8f0",      // Set border color to the same as the background
+                  backgroundColor: "#e2e8f0",
                   '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: "#e2e8f0", // Ensure the border of the fieldset is the same color
-                    },
-                    '&:hover fieldset': {
-                      borderColor: "#e2e8f0", // Make sure the hover state matches too
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: "#e2e8f0", // Make sure the focused state matches as well
-                    }
-                  }
+                    '& fieldset': { borderColor: "#e2e8f0" },
+                    '&:hover fieldset': { borderColor: "#e2e8f0" },
+                    '&.Mui-focused fieldset': { borderColor: "#e2e8f0" },
+                  },
                 }}
               >
                 {countryOptions.map((country) => (
@@ -157,40 +180,43 @@ const Mui = () => {
                 label="ex: 087678866"
                 variant="outlined"
                 fullWidth
-                value={phoneNumber}
-                onChange={handlePhoneNumberChange}
                 required
                 size="small"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 sx={{ maxWidth: '250px' }}
               />
             </div>
           </div>
 
-          {/* Terms and Conditions */}
+          {/* Terms */}
           <div className="my-6 flex items-start">
             <Checkbox required />
-            <p className="text-sm px-2 text-left">J'accepte les Conditions Générales d'Utilisation, les <br />  <a
-              href="/payment-terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              Conditions Générales d'Utilisation du Service de Paiement,
-            </a><br />et je  reconnais avoir lu la <u>Politique de Confidentialité</u>.</p>
+            <p className="text-sm px-2 text-left">
+              J'accepte les Conditions Générales d'Utilisation, les <br />
+              <a
+                href="/payment-terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                Conditions Générales d'Utilisation du Service de Paiement,
+              </a><br />
+              et je reconnais avoir lu la <u>Politique de Confidentialité</u>.
+            </p>
           </div>
 
-          {/* Submit Button */}
-          <Link to="/page2">
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              className="mt-4"
-              sx={{ maxWidth: "400px", marginX: 'auto' }}
-            >
-              Accepter et Continuer
-            </Button>
-          </Link>
+          {/* Submit */}
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleSubmit}
+            className="mt-4"
+            sx={{ maxWidth: "400px", marginX: 'auto' }}
+          >
+            Accepter et Continuer
+          </Button>
         </div>
       </div>
 
