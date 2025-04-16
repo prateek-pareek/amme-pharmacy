@@ -5,7 +5,7 @@ import icon from "../assets/Frame 401.png";
 import image from "../assets/Frame 436.png";
 import { useNavigate } from "react-router-dom";
 import LoginPagesInspector from "./UI/LoginPagesInspecter";
-import { POST } from "../backend/axiosconfig"; // Adjust path to your axios utility
+import axios from "axios";
 
 const countryOptions = [
   { code: "US", dialCode: "+1", label: "États-Unis" },
@@ -32,27 +32,56 @@ const Mui = () => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
+    // Validation check
+    if (!firstName || !lastName || !dob || !professionalPharmacistNumber || !siretNumber || !phoneNumber) {
+        alert("Veuillez remplir tous les champs obligatoires");
+        return;
+    }
+
     const payload = {
-      firstName,
-      lastName,
-      dob,
-      professionalPharmacistNumber,
-      siretNumber,
-      phoneNumber,
+        firstName,
+        lastName,
+        dob,
+        professionalPharmacistNumber,
+        siretNumber,
+        phoneNumber
     };
 
-    POST(
-      "/pharmacist/step1",
-      payload,
-      (res) => {
-        console.log("Success:", res);
+    console.log("Sending step1 payload:", payload);
+
+    // Direct axios call to match the working example
+    axios({
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://amme-api-pied.vercel.app/api/pharmacist/step1',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        data: payload
+    })
+    .then((response) => {
+        console.log("Step 1 Success:", response.data);
+        
+        // IMPORTANT: Save sessionId to localStorage
+        if (response.data && response.data.sessionId) {
+            console.log("Saving sessionId to localStorage:", response.data.sessionId);
+            localStorage.setItem("sessionId", response.data.sessionId);
+        } else {
+            console.error("No sessionId in response:", response.data);
+            alert("Error: No session ID received from server");
+            return;
+        }
+
+        // Verify the sessionId was saved correctly
+        const savedSessionId = localStorage.getItem("sessionId");
+        console.log("Verified sessionId in localStorage:", savedSessionId);
+        
         navigate("/page2");
-      },
-      (err) => {
-        console.error("API Error:", err);
+    })
+    .catch((error) => {
+        console.error("API Error:", error?.response?.data || error);
         alert("Erreur lors de l'envoi du formulaire.");
-      }
-    );
+    });
   };
 
   return (

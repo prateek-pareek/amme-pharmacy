@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import icon from "../assets/Frame 401.png"; // Adjust path if needed
 import image from "../assets/Frame 436.png";
 import { useNavigate } from "react-router-dom";
 import LoginPagesInspector from "./UI/LoginPagesInspecter";
 import { POST } from "../backend/axiosconfig"; // ✅ Custom POST method
+import axios from "axios";
 
 const Page3 = () => {
   const navigate = useNavigate();
   const [currentPage] = useState(3);
   const [pharmacyName, setPharmacyName] = useState("");
   const [pharmacyAddress, setPharmacyAddress] = useState("");
+  const [error, setError] = useState("");
+
+  // Check for sessionId on component mount
+  useEffect(() => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (!sessionId) {
+      setError("Session ID missing. Please complete step 1 first.");
+      console.error("No sessionId found in localStorage");
+      // Uncomment to auto-redirect
+      // setTimeout(() => navigate("/page1"), 2000);
+    } else {
+      console.log("SessionId found in localStorage:", sessionId);
+    }
+  }, [navigate]);
 
   const handleSubmit = async () => {
     try {
@@ -22,7 +37,15 @@ const Page3 = () => {
         pharmacyAddress,
       };
 
-      const response = await POST("pharmacist/step3", payload);
+      const response = await axios.post(
+        "https://amme-api-pied.vercel.app/api/pharmacist/step3",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       console.log("Step 3 Success:", response);
       navigate("/page4");
@@ -94,6 +117,13 @@ const Page3 = () => {
           >
             Terminer
           </Button>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mt-2 text-red-500 text-sm">
+              {error}
+            </div>
+          )}
         </div>
       </div>
 
