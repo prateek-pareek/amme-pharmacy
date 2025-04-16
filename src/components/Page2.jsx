@@ -6,7 +6,7 @@ import icon from "../assets/Frame 401.png";
 import image from "../assets/Frame 436.png";
 import { useNavigate } from "react-router-dom";
 import LoginPagesInspector from "./UI/LoginPagesInspecter";
-import { POST } from "../backend/axiosconfig"; // ✅ Custom POST method
+import axios from "axios";
 
 const Page2 = () => {
   const navigate = useNavigate();
@@ -15,11 +15,25 @@ const Page2 = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPage] = useState(2);
+  const [error, setError] = useState(null);
 
   const [minLength, setMinLength] = useState(false);
   const [hasNumber, setHasNumber] = useState(false);
   const [hasUpperAndLower, setHasUpperAndLower] = useState(false);
   const [hasSymbol, setHasSymbol] = useState(false);
+
+  // Check for sessionId on component mount
+  useEffect(() => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (!sessionId) {
+      setError("Session ID missing. Please complete step 1 first.");
+      console.error("No sessionId found in localStorage");
+      // Uncomment to auto-redirect
+      // setTimeout(() => navigate("/page1"), 2000);
+    } else {
+      console.log("SessionId found in localStorage:", sessionId);
+    }
+  }, [navigate]);
 
   useEffect(() => {
     setMinLength(password.length >= 10);
@@ -30,7 +44,14 @@ const Page2 = () => {
 
   const handleSubmit = async () => {
     try {
+      setError(null);
       const sessionId = localStorage.getItem("sessionId");
+      
+      if (!sessionId) {
+        setError("Session ID missing. Please complete step 1 first.");
+        console.error("No sessionId found in localStorage");
+        return;
+      }
 
       const payload = {
         sessionId,
@@ -39,13 +60,30 @@ const Page2 = () => {
         passwordConfirm: confirmPassword,
       };
 
-      const response = await POST("pharmacist/step2", payload);
+      console.log('Sending payload:', payload);
 
-      console.log("Step 2 Success:", response);
+      const response = await axios.post(
+        "https://amme-api-pied.vercel.app/api/pharmacist/step2",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Step 2 Success:", response.data);
       navigate("/page3");
     } catch (error) {
+      const errorMessage = error?.response?.data?.message || "An error occurred during registration";
+      setError(errorMessage);
       console.error("Step 2 Error:", error?.response?.data || error.message);
     }
+  };
+
+  // Add a "Go to Step 1" button if no sessionId
+  const goToStep1 = () => {
+    navigate("/page1");
   };
 
   return (
@@ -70,6 +108,24 @@ const Page2 = () => {
           <h1 className="text-2xl font-semibold text-left mb-6">
             Informations de compte
           </h1>
+
+          {/* Display error if any */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <p>{error}</p>
+              {!localStorage.getItem("sessionId") && (
+                <Button 
+                  variant="outlined" 
+                  color="error" 
+                  size="small" 
+                  onClick={goToStep1}
+                  className="mt-2"
+                >
+                  Go to Step 1
+                </Button>
+              )}
+            </div>
+          )}
 
           {/* Email */}
           <div className="mb-4">
