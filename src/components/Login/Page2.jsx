@@ -73,8 +73,8 @@ const Page2 = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
-        {/* Password Input */}
+ 
+        {/* Password  Input .*/}
         <div className="my-2">
           <p className="my-2">Mot de passe*</p>
           <TextField
