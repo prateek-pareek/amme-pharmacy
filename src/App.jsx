@@ -16,7 +16,6 @@ import '@fontsource/inter/700.css'; // Bold weight
 
 // import '@fontsource/inter/variable.css'; 
 
-
 function App() {
 
   return (
