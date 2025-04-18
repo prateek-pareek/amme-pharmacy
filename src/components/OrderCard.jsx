@@ -11,9 +11,7 @@ const OrderCard = ({
   nurseName,
   medications,
   paymentStatus,
-  timeSlot,
-  postalAddress,
-  prescriptionUrl
+  orderNo,
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State for controlling the dialog visibility
   const cardBgColor = paymentStatus === 'Non payé' ? 'bg-[#FDA729]' : 'bg-[#0BAD38]';
@@ -23,56 +21,40 @@ const OrderCard = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">{patientName}</h3>
-          <p className="text-sm text-gray-500">Commande #{orderNumber}</p>
+    <div className="bg-white rounded-lg shadow-md"> {/* Added padding and rounded corners */}
+      {/* Top section */}
+      <div className={`${cardBgColor} flex flex-col justify-between p-4 rounded-lg mb-4`}>
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-white">{patientName}</h3>
+          <span className="flex items-center text-white">
+            {paymentStatus}
+            {/* <img src={VectorIcon} alt="vector" className="w-4 h-4 ml-2" /> */}
+          </span>
         </div>
-        <span className={`px-2 py-1 rounded text-sm ${
-          paymentStatus === "confirmed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
-        }`}>
-          {paymentStatus === "confirmed" ? "Confirmé" : "En attente"}
-        </span>
+
+        <div className="text-sm text-white mt-2">
+          <div className="flex justify-between">
+            <p>Commande n° {orderNumber}</p>
+            <p>{deliveryDate}</p>
+          </div>
+          <div className="flex justify-between mt-1">
+            <p>N° sécurité social :</p>
+            <p>{socialSecurityNumber}</p>
+          </div>
+          <div className="flex justify-between mt-1">
+            <p>Infirmier(e) :</p>
+            <p>{nurseName}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <p className="text-sm text-gray-600">
-          <span className="font-medium">Date:</span> {deliveryDate}
-        </p>
-        <p className="text-sm text-gray-600">
-          <span className="font-medium">Horaire:</span> {timeSlot}
-        </p>
-        <p className="text-sm text-gray-600">
-          <span className="font-medium">Adresse:</span> {postalAddress}
-        </p>
-        <p className="text-sm text-gray-600">
-          <span className="font-medium">Infirmier(e):</span> {nurseName}
-        </p>
-        
-        {medications && medications.length > 0 && (
-          <div>
-            <p className="font-medium text-sm text-gray-600 mb-1">Médicaments:</p>
-            <ul className="list-disc list-inside text-sm text-gray-600 pl-2">
-              {medications.map((med, index) => (
-                <li key={index}>{med}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {prescriptionUrl && (
-          <div className="mt-3">
-            <a 
-              href={prescriptionUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 text-sm underline"
-            >
-              Voir l'ordonnance
-            </a>
-          </div>
-        )}
+      {/* Medicines */}
+      <div className="mb-4 p-4">
+        <div className="text-gray-800">
+          {medications.map((medication, index) => (
+            <div key={index}>{medication}</div>
+          ))}
+        </div>
       </div>
 
       {/* Payment button */}
@@ -139,7 +121,7 @@ const OrderCard = ({
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
             <button className="border border-[#0C66E6] text-[#0C66E6] p-2 rounded w-full">
-              Transférer l'ordonnance
+              Transférer l’ordonnance
             </button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-white">

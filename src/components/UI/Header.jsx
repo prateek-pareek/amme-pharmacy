@@ -5,17 +5,27 @@ import Calendar from "./Calendar";
 import { CiSearch, CiCalendar, CiFlag1, CiMail } from "react-icons/ci";
 import { SlQuestion } from "react-icons/sl";
 import { LuUser } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 import ProfileModal from "./ProfileModal";
 import HelpModal from "./HelpModal";
 
-const Header = ({ selectedTab, setSelectedTab }) => {
-  const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
+const Header = ({ 
+  selectedTab, 
+  setSelectedTab, 
+  dateRange, 
+  setDateRange, 
+  onSearch, 
+  availableNames = [],
+  clearSearch 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
   const calendarRef = useRef(null);
+  const searchRef = useRef(null);
 
   const formatDateRange = () => {
     if (!dateRange.startDate) {
@@ -44,7 +54,53 @@ const Header = ({ selectedTab, setSelectedTab }) => {
     setShowSearch(!showSearch);
     if (!showSearch) {
       setSearchQuery("");
+      setSuggestions([]);
+    } else if (clearSearch) {
+      clearSearch();
     }
+  };
+
+  const handleSearchQueryChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.length > 0) {
+      // Filter available names based on query
+      const filteredSuggestions = availableNames.filter(name => 
+        name.fullName.toLowerCase().includes(query.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions.slice(0, 5)); // Limit to 5 suggestions
+    } else {
+      setSuggestions([]);
+      if (clearSearch) {
+        clearSearch();
+      }
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      if (onSearch) {
+        onSearch(searchQuery.trim());
+      }
+      setSuggestions([]); // Clear suggestions after search
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion.fullName);
+    if (onSearch) {
+      onSearch(suggestion.fullName);
+    }
+    setSuggestions([]);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    if (clearSearch) {
+      clearSearch();
+    }
+    setSuggestions([]);
   };
 
   const toggleProfileModal = () => {
@@ -59,19 +115,19 @@ const Header = ({ selectedTab, setSelectedTab }) => {
     if (calendarRef.current && !calendarRef.current.contains(event.target)) {
       setIsOpen(false);
     }
+    
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setSuggestions([]);
+    }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
+    document.addEventListener("mousedown", handleClickOutside);
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, []);
 
   const isDateRangeSelected = dateRange.startDate && dateRange.endDate;
 
@@ -136,7 +192,6 @@ const Header = ({ selectedTab, setSelectedTab }) => {
         )}
       </div>
 
-      {/* Rest of the header content remains the same */}
       {/* Tabs */}
       <div className="flex-1 flex justify-center">
         <div className="p-2 bg-gray-100 rounded-lg">
@@ -170,21 +225,49 @@ const Header = ({ selectedTab, setSelectedTab }) => {
       {/* Icons */}
       <div className="flex items-center space-x-4">
         {showSearch ? (
-          <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 w-64 h-12">
-            <CiSearch className="w-4 h-4 mr-2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="outline-none border-none w-48"
-              autoFocus
-            />
-            <button
-              onClick={toggleSearch}
-              className="ml-2 text-gray-500 hover:text-gray-700"
-            >
-              ✕
-            </button>
+          <div className="relative" ref={searchRef}>
+            <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 w-64 h-12">
+              <CiSearch className="w-4 h-4 mr-2 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchQueryChange}
+                onKeyDown={handleSearchSubmit}
+                placeholder="Rechercher par nom..."
+                className="outline-none border-none w-48"
+                autoFocus
+              />
+              {searchQuery && (
+                <button
+                  onClick={handleClearSearch}
+                  className="ml-2 text-gray-500 hover:text-gray-700"
+                >
+                  <IoClose className="w-4 h-4" />
+                </button>
+              )}
+              {/* <button
+                onClick={toggleSearch}
+                className="ml-2 text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button> */}
+            </div>
+            
+            {/* Suggestions dropdown */}
+            {suggestions.length > 0 && (
+              <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg z-10">
+                {suggestions.map((suggestion, index) => (
+                  <div 
+                    key={index}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    <span>{suggestion.fullName}</span>
+                    <span className="text-xs text-gray-500">{suggestion.type}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div

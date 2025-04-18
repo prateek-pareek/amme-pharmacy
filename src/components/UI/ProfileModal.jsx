@@ -3,6 +3,7 @@ import { CiFlag1 } from "react-icons/ci";
 import axios from "axios";
 
 const ProfileModal = ({ isOpen, toggleModal }) => {
+    // Initialize with empty values
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -16,56 +17,124 @@ const ProfileModal = ({ isOpen, toggleModal }) => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    // Fetch profile data when modal opens
+    // Load data from localStorage when modal opens
     useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await axios.get('https://amme-api-pied.vercel.app/pharmacist/profile');
-                setFormData(response.data); // assuming response.data has the correct shape
-            } catch (error) {
-                console.error('Error fetching profile:', error);
-                alert('Failed to load profile. Please try again.');
+        if (!isOpen) return;
+        
+        // Function to load signup data from localStorage
+        const loadUserDataFromStorage = () => {
+            console.log("Loading user data from localStorage");
+            
+            // Step 1: We need to check if sessionId exists (confirms signup process started)
+            const sessionId = localStorage.getItem("sessionId");
+            
+            if (sessionId) {
+                console.log("Found sessionId in localStorage:", sessionId);
+                
+                // Initialize data object with any persisted values
+                let storedData = {};
+                
+                // Try to load the data entered in each step of signup
+                try {
+                    // Try to find directly stored fields first (from step01.jsx)
+                    const storedSignupFields = {
+                        firstName: localStorage.getItem("firstName"),
+                        lastName: localStorage.getItem("lastName"),
+                        dob: localStorage.getItem("dob"),
+                        professionalPharmacistNumber: localStorage.getItem("professionalPharmacistNumber"),
+                        siretNumber: localStorage.getItem("siretNumber"),
+                        phoneNumber: localStorage.getItem("phoneNumber"),
+                        
+                        // Step 2 (from Page2.jsx)
+                        pharmacyEmail: localStorage.getItem("email"),
+                        
+                        // Step 3 (from Page3.jsx)
+                        pharmacyName: localStorage.getItem("pharmacyName"),
+                        pharmacyAddress: localStorage.getItem("pharmacyAddress")
+                    };
+                    
+                    // Filter out null/undefined values
+                    Object.entries(storedSignupFields).forEach(([key, value]) => {
+                        if (value) {
+                            storedData[key] = value;
+                        }
+                    });
+                    
+                    // Also check for a previously saved complete profile object
+                    const savedProfile = localStorage.getItem("savedProfile");
+                    if (savedProfile) {
+                        try {
+                            const parsedProfile = JSON.parse(savedProfile);
+                            storedData = { ...storedData, ...parsedProfile };
+                            console.log("Loaded saved profile:", parsedProfile);
+                        } catch (e) {
+                            console.error("Error parsing saved profile:", e);
+                        }
+                    }
+                    
+                    console.log("Final data to use:", storedData);
+                    
+                    // Use the stored data if we have any
+                    if (Object.keys(storedData).length > 0) {
+                        setFormData(prevData => ({ ...prevData, ...storedData }));
+                    }
+                } catch (e) {
+                    console.error("Error loading data from localStorage:", e);
+                }
             }
         };
-
-        if (isOpen) {
-            fetchProfile();
-        }
+        
+        // Load data from localStorage
+        loadUserDataFromStorage();
+        
     }, [isOpen]);
 
+    // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        
+        // Update state
+        setFormData(prevState => {
+            const newData = {
+                ...prevState,
+                [name]: value
+            };
+            
+            // Save the entire form state to localStorage
+            localStorage.setItem("savedProfile", JSON.stringify(newData));
+            
+            return newData;
+        });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError('');
+        
         try {
-            const response = await axios.put(
-                'https://amme-api-pied.vercel.app/pharmacist/update-user',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            console.log('Profile updated:', response.data);
-            toggleModal(); // Close modal on success
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            alert('Failed to update profile. Please try again.');
+            // Save the current form data to localStorage
+            localStorage.setItem("savedProfile", JSON.stringify(formData));
+            
+            // Individual fields for easier access
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value) localStorage.setItem(key, value);
+            });
+            
+            alert("Profile information saved successfully!");
+            toggleModal();
+        } catch (err) {
+            console.error("Error saving profile:", err);
+            setError("There was an error saving your profile.");
         } finally {
             setLoading(false);
         }
     };
 
-    // Close modal on outside click
+    // Handle outside click to close modal
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (isOpen && event.target.classList.contains('modal-backdrop')) {
@@ -93,6 +162,12 @@ const ProfileModal = ({ isOpen, toggleModal }) => {
                     <h2 className="text-3xl font-semibold text-gray-800">Profil</h2>
                     <button onClick={toggleModal} className="text-black hover:text-gray-700 text-5xl">&times;</button>
                 </div>
+
+                {error && (
+                    <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+                        {error}
+                    </div>
+                )}
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     {/* Name & Surname */}
